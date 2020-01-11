@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+   <children>
+      <Label layoutX="102.0" layoutY="78.0" text="Java Developer Class">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Label>
+      <Label layoutX="211.0" layoutY="146.0" text="GUI Code lab">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="206.0" text="Hello Java FX">
+         <font>
+            <Font size="72.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
