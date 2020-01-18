@@ -7,18 +7,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdc.controls.Controls">
    <children>
       <Label rotate="-90.0" text="Controls Demo" translateX="-100.0" translateY="160.0">
          <font>
             <Font size="48.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="286.0" scaleX="1.6" spacing="20.0" translateX="-100.0" HBox.hgrow="ALWAYS">
+      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="286.0" scaleX="1.6" scaleY="1.3" spacing="20.0" translateX="-100.0" HBox.hgrow="ALWAYS">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Single Value Inputs" />
-            <Button layoutX="10.0" layoutY="197.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Single Value Outputs" />
+            <Button id="SingleValueInputs" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadView" text="Single Value Inputs" />
             <Button layoutX="10.0" layoutY="220.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Multi Select Inputs" />
             <Button layoutX="10.0" layoutY="244.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List Output Views" />
             <Button layoutX="10.0" layoutY="267.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Combobox" />
