@@ -14,11 +14,10 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="286.0" scaleX="1.6" scaleY="1.3" spacing="20.0" translateX="-100.0" HBox.hgrow="ALWAYS">
+      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="286.0" scaleX="1.6" scaleY="1.6" spacing="20.0" translateX="-100.0" HBox.hgrow="ALWAYS">
          <children>
             <Button id="SingleValueInputs" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadView" text="Single Value Inputs" />
-            <Button layoutX="10.0" layoutY="220.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Multi Select Inputs" />
-            <Button layoutX="10.0" layoutY="244.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List Output Views" />
+            <Button id="ListViews" layoutX="10.0" layoutY="244.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadView" text="List View" />
             <Button layoutX="10.0" layoutY="267.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Combobox" />
             <Button layoutX="10.0" layoutY="291.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Table Views" />
             <Button layoutX="10.0" layoutY="314.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sliders" />

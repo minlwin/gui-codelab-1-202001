@@ -33,7 +33,16 @@ public class Controls extends Application{
 				
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(new Scene(FXMLLoader.load(getClass().getResource(viewName))));
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(viewName));
+			stage.setScene(new Scene(loader.load()));
+			
+			Object controller = loader.getController();
+			if(controller instanceof SceneInitController) {
+				SceneInitController sController = (SceneInitController) controller;
+				sController.initScene();
+			}
+			
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
