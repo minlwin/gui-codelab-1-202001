@@ -2,6 +2,8 @@ package com.jdc.controls;
 
 import java.util.List;
 
+import com.jdc.controls.model.Course;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
@@ -9,9 +11,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
 public class ListViews implements SceneInitController{
 
@@ -22,10 +26,10 @@ public class ListViews implements SceneInitController{
     private ListView<String> stringListView;
 
     @FXML
-    private TextField objectnput;
+    private TextField objectInput;
 
     @FXML
-    private ListView<?> objectListViiew;
+    private ListView<Course> objectListView;
     
     @FXML
     private void initialize() {  	
@@ -63,7 +67,44 @@ public class ListViews implements SceneInitController{
     			}
     		}
     	});
+    	
+    	objectInput.setOnKeyPressed(event -> {
+    		if(event.getCode() == KeyCode.ENTER) {
+    			
+    			if(!objectInput.getText().isEmpty()) {
+        			Course c = new Course();
+        			c.setName(objectInput.getText());
+        			c.setId(objectListView.getItems().size() + 1);
+        			objectListView.getItems().add(c);
+        			objectInput.clear();
+    			}
+    		}
+    	});
+    	
+    	objectListView.setEditable(true);
+    	objectListView.setCellFactory(TextFieldListCell.forListView(new StringConverter<Course>() {
+
+			@Override
+			public String toString(Course object) {
+				return object.getName();
+			}
+
+			@Override
+			public Course fromString(String string) {
+				Course c = objectListView.getSelectionModel().getSelectedItem();
+				
+				if(null != c) {
+					c.setName(string);
+				}
+				return c;
+			}
+		}));
+    	
+    	stringListView.setEditable(true);
+    	stringListView.setCellFactory(TextFieldListCell.forListView());
     }
+    
+    
 
 	@Override
 	public void initScene() {
@@ -74,8 +115,8 @@ public class ListViews implements SceneInitController{
 		
     	stringInput.getScene().setOnMouseClicked(stringListClear);
     	stringInput.setOnMouseClicked(stringListClear);
-    	objectnput.setOnMouseClicked(stringListClear);
-    	objectListViiew.setOnMouseClicked(stringListClear);
+    	objectInput.setOnMouseClicked(stringListClear);
+    	objectListView.setOnMouseClicked(stringListClear);
 	}
 
 }
