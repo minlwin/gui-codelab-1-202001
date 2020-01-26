@@ -38,9 +38,12 @@ public class StudentModel {
 	}
 
 	public void save(Student student) {
+		list.add(student);
+		save();
+	}
 
+	public void save() {
 		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE))) {
-			list.add(student);
 			out.writeObject(list);
 		} catch (Exception e) {
 			// TODO: handle exception

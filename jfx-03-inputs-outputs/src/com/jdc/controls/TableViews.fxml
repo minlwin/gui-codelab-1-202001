@@ -61,17 +61,17 @@
                   <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="nameColumn" prefWidth="166.0" text="Name" />
-                        <TableColumn prefWidth="149.0" text="Phone" >
+                        <TableColumn fx:id="phoneColumn" prefWidth="149.0" text="Phone" >
                         	<cellValueFactory>
                         		<PropertyValueFactory property="phone" />
                         	</cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="182.0" text="Email"  >
+                        <TableColumn fx:id="emailColumn" prefWidth="182.0" text="Email"  >
                         	<cellValueFactory>
                         		<PropertyValueFactory property="email" />
                         	</cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="325.0" text="Address"  >
+                        <TableColumn fx:id="addressColumn" prefWidth="325.0" text="Address"  >
                         	<cellValueFactory>
                         		<PropertyValueFactory property="address" />
                         	</cellValueFactory>
