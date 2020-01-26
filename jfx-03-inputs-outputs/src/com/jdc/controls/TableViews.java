@@ -1,11 +1,12 @@
 package com.jdc.controls;
 
 import com.jdc.controls.model.Student;
+import com.jdc.controls.model.StudentModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,12 +31,23 @@ public class TableViews {
     @FXML
     private TableColumn<Student, String> nameColumn;
     
+    private StudentModel model;
+    
     @FXML
     private void initialize() {
     	nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    	
+    	model = StudentModel.getInstance();
+    	
+    	reloadTable();
     }
 
-    @FXML
+    private void reloadTable() {
+    	table.getItems().clear();
+    	table.getItems().addAll(model.getAllStudents());
+	}
+
+	@FXML
     private void addStudent() {
     	
     	try {
@@ -43,8 +55,11 @@ public class TableViews {
         	// create object
         	Student student = getViewData();
         	
-        	// add to table
-        	table.getItems().add(student);
+        	// save students
+        	model.save(student);
+        	
+        	// reload table
+        	reloadTable();
         	
         	// clear inputs
         	name.clear();
