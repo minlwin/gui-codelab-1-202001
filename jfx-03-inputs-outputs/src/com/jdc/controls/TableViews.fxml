@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="784.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdc.controls.TableViews">
    <children>
       <HBox alignment="BOTTOM_LEFT" style="-fx-background-color: silver;">
          <children>
@@ -32,38 +32,50 @@
                   <VBox spacing="5.0">
                      <children>
                         <Label text="Name" />
-                        <TextField />
+                        <TextField fx:id="name" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="10.0" spacing="5.0">
                      <children>
                         <Label text="Phone" />
-                        <TextField />
+                        <TextField fx:id="phone" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="59.0" spacing="5.0">
                      <children>
                         <Label text="Email" />
-                        <TextField />
+                        <TextField fx:id="email" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="108.0" spacing="5.0">
                      <children>
                         <Label text="Address" />
-                        <TextField />
+                        <TextField fx:id="address" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="ADD STUDENT" />
+                  <Button mnemonicParsing="false" onAction="#addStudent" prefHeight="27.0" prefWidth="148.0" text="ADD STUDENT" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                <children>
-                  <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                      <TableColumn prefWidth="166.0" text="Name" />
-                      <TableColumn prefWidth="149.0" text="Phone" />
-                        <TableColumn prefWidth="182.0" text="Email" />
-                        <TableColumn prefWidth="325.0" text="Address" />
+                        <TableColumn fx:id="nameColumn" prefWidth="166.0" text="Name" />
+                        <TableColumn prefWidth="149.0" text="Phone" >
+                        	<cellValueFactory>
+                        		<PropertyValueFactory property="phone" />
+                        	</cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="182.0" text="Email"  >
+                        	<cellValueFactory>
+                        		<PropertyValueFactory property="email" />
+                        	</cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="325.0" text="Address"  >
+                        	<cellValueFactory>
+                        		<PropertyValueFactory property="address" />
+                        	</cellValueFactory>
+                        </TableColumn>
                     </columns>
                   </TableView>
                </children>
