@@ -1,0 +1,68 @@
+* {
+	primary: #3e206d;
+	primary-light: #d89cf6;
+	secondary: #916dd5;
+	secondary-light: #f0e3ff;
+}
+
+.text-field, 
+.password-field, 
+.button {
+	
+	-fx-background-color: transparent;
+	-fx-text-fill: primary;
+	-fx-border-style: solid;
+	-fx-border-width: 1px;
+	-fx-border-color: secondary;	
+}
+
+.button {
+	-fx-pref-width: 120px;
+}
+
+.button:hover {
+	-fx-background-color: secondary;
+	-fx-text-fill: secondary-light;
+}
+
+.text-field:focused, 
+.password-field:focused {
+	-fx-border-width: 1.5px;
+	-fx-border-color: primary;
+}
+
+.header {
+	-fx-background-color: primary;
+	-fx-padding: 20px;
+}
+
+.header > .label {
+	-fx-text-fill: secondary-light;
+	-fx-font-size: 24px;
+}
+
+/** Login View Styles */
+
+.login-view {
+	-fx-pref-width: 480px;
+	-fx-pref-height: 300px;
+	-fx-background-color: secondary-light;
+}
+
+.login-view .label {
+	-fx-text-fill: primary;
+}
+
+.login-view .button-box {
+	-fx-alignment: center-left;
+	-fx-spacing: 10px;	
+}
+
+/** Account Home Style */
+.main-frame {
+	-fx-pref-width: 1180px;
+	-fx-pref-height: 780px;
+	-fx-background-color: secondary-light;
+}
+
+

@@ -1,5 +1,6 @@
 package com.jdc.controls;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -56,8 +57,8 @@ public class TableViews {
     	Function<Supplier<Consumer<String>>, EventHandler<TableColumn.CellEditEvent<Student,String>>> function 
     		= supplier -> event -> {
     			supplier.get().accept(event.getNewValue());
-    			model.save();
     		};
+    		
     		
     	table.setEditable(true);
 
