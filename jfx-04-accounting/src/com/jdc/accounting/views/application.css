@@ -31,15 +31,6 @@
 	-fx-border-color: primary;
 }
 
-.header {
-	-fx-background-color: primary;
-	-fx-padding: 20px;
-}
-
-.header > .label {
-	-fx-text-fill: secondary-light;
-	-fx-font-size: 24px;
-}
 
 /** Login View Styles */
 
@@ -66,3 +57,13 @@
 }
 
 
+/** Header */
+.header {
+	-fx-background-color: primary;
+	-fx-padding: 20px;
+}
+
+.header > .label {
+	-fx-text-fill: secondary-light;
+	-fx-font-size: 24px;
+}
