@@ -56,6 +56,10 @@
 	-fx-background-color: secondary-light;
 }
 
+.main-frame > .main-header {
+	-fx-background-color: primary;
+}
+
 
 /** Header */
 .header {
@@ -66,4 +70,24 @@
 .header > .label {
 	-fx-text-fill: secondary-light;
 	-fx-font-size: 24px;
+}
+
+/** Icon Menu */
+
+.icon-menu {
+	-fx-alignment: bottom-center;
+	-fx-pref-width: 90px;
+	-fx-spacing: 5px;
+	-fx-padding: 12;
+}
+
+.icon-menu:hover {
+	-fx-background-color: secondary;
+	-fx-cursor: hand;
+}
+
+.icon-menu > .label,
+.icon-menu > SVGPath {
+	-fx-text-fill: secondary-light;
+	-fx-fill: secondary-light;
 }
