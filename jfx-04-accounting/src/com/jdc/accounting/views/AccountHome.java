@@ -58,7 +58,7 @@ public class AccountHome {
 			}
 		}
 		
-		loadHome();
+		loadView(ViewId.Home.getView());
 	}
 
 	@FXML
@@ -73,9 +73,6 @@ public class AccountHome {
 				ViewId viewId = ViewId.valueOf(menuId);
 				
 				switch (viewId) {
-				case Home:
-					loadHome();
-					break;
 				case Incomes:
 				case Expenses:
 					loadBalances(viewId);
@@ -92,15 +89,6 @@ public class AccountHome {
 
 	}
 	
-	private void loadHome() throws IOException {
-		
-		if(ApplicationContext.isAdamin()) {
-			loadView("ManagerHome.fxml");
-		} else {
-			loadView("EmployeeHome.fxml");
-		}
-	}
-
 	private void loadBalances(ViewId viewId) throws IOException {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(viewId.getView()));

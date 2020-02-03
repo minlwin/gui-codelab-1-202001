@@ -31,6 +31,17 @@
 	-fx-border-color: primary;
 }
 
+.sp10 {
+	-fx-spacing: 10px;
+}
+
+.sp20 {
+	-fx-spacing: 20px;
+}
+
+.pad10 {
+	-fx-padding: 10px;
+}
 
 /** Login View Styles */
 
@@ -72,6 +83,17 @@
 	-fx-font-size: 24px;
 }
 
+/** Content View */
+.content-view {
+	-fx-pref-width: 1180px;
+	-fx-pref-height: 711px;
+	-fx-max-width: 3000px;
+	-fx-max-height: 3000px;
+	-fx-spacing: 10px;
+	-fx-padding: 10px;
+	-fx-background-color: secondary-light;
+}
+
 /** Icon Menu */
 
 .icon-menu {
@@ -91,3 +113,27 @@
 	-fx-text-fill: secondary-light;
 	-fx-fill: secondary-light;
 }
+
+/** Small Column */
+.small-column {
+	-fx-pref-width: 420px;
+}
+
+/** Area */
+.area  > .header {
+	-fx-border-style: solid;
+	-fx-border-width: 0 0.0 1 0;
+	-fx-border-color: secondary;
+}
+
+.area > .header {
+	-fx-background-color: primary-light;
+	-fx-padding: 10px;
+}
+
+.area > .header .label{
+	-fx-text-fill: primary;
+	-fx-font-size: 14px;
+}
+
+

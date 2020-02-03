@@ -1,7 +1,7 @@
 package com.jdc.accounting.views.utils;
 
 public enum ViewId {
-	Home("", false), 
+	Home("EmployeeHome", false), 
 	Incomes("BalanceManagement", false), 
 	Expenses("BalanceManagement", false), 
 	Balances("BalanceReport", true), 

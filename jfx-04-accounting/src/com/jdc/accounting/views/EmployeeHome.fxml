@@ -1,16 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="content-view" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Employee Home">
-         <font>
-            <Font size="43.0" />
-         </font>
-      </Label>
+      <VBox prefWidth="100.0" styleClass="small-column">
+         <children>
+            <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" styleClass="area" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox styleClass="header">
+                     <children>
+                        <Label text="Profile" />
+                     </children>
+                  </HBox>
+                  <HBox styleClass="pad10">
+                     <children>
+                        <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@account-icon-13.png" />
+                           </image>
+                        </ImageView>
+                        <VBox styleClass="sp10" HBox.hgrow="ALWAYS">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Code" />
+                                    <Label text="EMP-001" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <Label text="Name" />
+                                    <Label text="U Maung  Maung" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="142.0">
+                                 <children>
+                                    <Label text="Role" />
+                                    <Label text="Employee" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <Label text="Phone" />
+                                    <Label text="0977898776688" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="54.0">
+                                 <children>
+                                    <Label text="Email" />
+                                    <Label text="maung@gmail.com" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="EDIT PROFILE" HBox.hgrow="ALWAYS" />
+                        <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="CHANGE PASSWORD" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <styleClass>
+                        <String fx:value="sp10" />
+                        <String fx:value="pad10" />
+                     </styleClass>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" styleClass="area" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox styleClass="header">
+                     <children>
+                        <Label text="Summary" />
+                     </children>
+                  </HBox>
+                  <PieChart />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+         <children>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" styleClass="area" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox styleClass="header">
+                     <children>
+                        <Label text="Incomes" />
+                     </children>
+                  </HBox>
+                  <LineChart>
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" styleClass="area" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox styleClass="header">
+                     <children>
+                        <Label text="Expenses" />
+                     </children>
+                  </HBox>
+                  <LineChart>
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</HBox>

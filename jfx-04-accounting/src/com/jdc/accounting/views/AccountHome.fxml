@@ -8,7 +8,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-frame" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdc.accounting.views.AccountHome">
    <children>
-      <HBox styleClass="main-header" fx:id="header">
+      <HBox fx:id="header" styleClass="main-header">
          <children>
             <HBox styleClass="header" HBox.hgrow="ALWAYS">
                <children>
@@ -47,6 +47,6 @@
             </VBox>
          </children>
       </HBox>
-      <StackPane fx:id="content" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="content" VBox.vgrow="ALWAYS" />
    </children>
 </VBox>
