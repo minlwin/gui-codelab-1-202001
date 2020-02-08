@@ -7,17 +7,45 @@
 
 .text-field, 
 .password-field, 
+.combo-box,
+.text-area,
 .button {
 	
 	-fx-background-color: transparent;
 	-fx-text-fill: primary;
+	-fx-prompt-text-fill: secondary;
+	
 	-fx-border-style: solid;
 	-fx-border-width: 1px;
 	-fx-border-color: secondary;	
 }
 
+.text-area .content {
+	-fx-background-color: transparent;
+}
+
 .button {
 	-fx-pref-width: 120px;
+}
+
+.date-picker {
+	-fx-background-color: transparent;
+}
+
+.date-picker > .arrow-button {
+	-fx-background-color: transparent;
+	-fx-text-fill: primary;
+	-fx-prompt-text-fill: secondary;
+	
+	-fx-border-style: solid;
+	-fx-border-width: 1 1 1 0;
+	-fx-border-color: secondary;	
+}
+
+.date-picker-popup .button {
+	-fx-pref-width: 0px;
+	-fx-border-style: none;
+	-fx-border-width: 0;
 }
 
 .button:hover {
@@ -31,6 +59,14 @@
 	-fx-border-color: primary;
 }
 
+.date-picker {
+	
+}
+
+.sp5 {
+	-fx-spacing: 5px;
+}
+
 .sp10 {
 	-fx-spacing: 10px;
 }
@@ -41,6 +77,10 @@
 
 .pad10 {
 	-fx-padding: 10px;
+}
+
+.wid-240 {
+	-fx-pref-width: 240px;
 }
 
 /** Login View Styles */
@@ -120,20 +160,25 @@
 }
 
 /** Area */
-.area  > .header {
+.area  > .header,
+.content-view > .header
+ {
 	-fx-border-style: solid;
-	-fx-border-width: 0 0.0 1 0;
+	-fx-border-width: 0 0 1 0;
 	-fx-border-color: secondary;
-}
-
-.area > .header {
 	-fx-background-color: primary-light;
 	-fx-padding: 10px;
 }
 
-.area > .header .label{
+.area > .header .label,
+.content-view > .header .label
+{
 	-fx-text-fill: primary;
 	-fx-font-size: 14px;
 }
 
+/** popup dialog */
+.popup-view {
+	-fx-pref-width: 600px;
+}
 
