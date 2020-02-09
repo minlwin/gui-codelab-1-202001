@@ -19,16 +19,16 @@
       </HBox>
       <HBox styleClass="sp10">
          <children>
-            <ComboBox prefWidth="150.0" promptText="Category" />
-            <TextField promptText="Employee " />
-            <DatePicker promptText="Date From" />
-            <DatePicker layoutX="343.0" layoutY="10.0" promptText="Date To" />
-            <Button mnemonicParsing="false" text="SEARCH" />
-            <Button layoutX="833.0" layoutY="10.0" mnemonicParsing="false" text="CLEAR" />
-            <Button layoutX="963.0" layoutY="10.0" mnemonicParsing="false" text="ADD NEW" />
+            <ComboBox fx:id="schCategory" prefWidth="150.0" promptText="Category" />
+            <TextField fx:id="schEmployee" promptText="Employee " />
+            <DatePicker fx:id="dateFrom" promptText="Date From" />
+            <DatePicker fx:id="dateTo" layoutX="343.0" layoutY="10.0" promptText="Date To" />
+            <Button mnemonicParsing="false" onAction="#search" text="SEARCH" />
+            <Button layoutX="833.0" layoutY="10.0" mnemonicParsing="false" onAction="#clear" text="CLEAR" />
+            <Button layoutX="963.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNew" text="ADD NEW" />
          </children>
       </HBox>
-      <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn maxWidth="160.0" minWidth="160.0" prefWidth="160.0" text="Date" />
           <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Employee" />

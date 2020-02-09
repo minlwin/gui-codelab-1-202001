@@ -1,5 +1,10 @@
 package com.jdc.accounting.views;
 
+import java.util.function.Consumer;
+
+import com.jdc.accounting.model.BalanceException;
+import com.jdc.accounting.model.entity.Employee;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -32,18 +37,37 @@ public class EmployeeEdit {
 
     @FXML
     private TextArea address;
-
+    
+    private Consumer<Employee> saveListener;
+    
     @FXML
     private void close() {
-
+    	message.getScene().getWindow().hide();
     }
 
     @FXML
     private void save() {
+    	
+    	try {
+			
+    		Employee emp = getViewData();
+    		
+    		saveListener.accept(emp);
+    		
+    		close();
+    		
+		} catch (BalanceException e) {
+			e.printStackTrace();
+		}
 
     }
 
-	public static void show() {
+	private Employee getViewData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static void show(Consumer<Employee> listener) {
 
 		try {
 			Stage stage = new Stage();
@@ -52,11 +76,15 @@ public class EmployeeEdit {
 			FXMLLoader loader = new FXMLLoader(EmployeeEdit.class.getResource("EmployeeEdit.fxml"));
 			stage.setScene(new Scene(loader.load()));
 			
+			EmployeeEdit controller = loader.getController();
+			controller.saveListener = listener;
+			
 			stage.show();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 
 }

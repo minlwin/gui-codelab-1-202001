@@ -1,5 +1,7 @@
 package com.jdc.accounting.views;
 
+import com.jdc.accounting.model.entity.Employee;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
@@ -21,7 +23,7 @@ public class EmployeeManagement {
 
     @FXML
     private void addNew() {
-    	EmployeeEdit.show();
+    	EmployeeEdit.show(this::save);
     }
 
     @FXML
@@ -41,6 +43,13 @@ public class EmployeeManagement {
     	// clear table items
     	
     	// add search result to table
+    	
+    	System.out.println("Reload Table");
     }
+
+	private void save(Employee emp) {
+
+		search();
+	}
 
 }

@@ -17,7 +17,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AccountHome {
+public class AccountHome implements ContentManager{
+	
+	private static ContentManager contentManager;
+	
+	public static ContentManager getContentManager() {
+		return contentManager;
+	}
 	
 	@FXML
 	private StackPane content;
@@ -59,6 +65,8 @@ public class AccountHome {
 		}
 		
 		loadView(ViewId.Home.getView());
+		
+		contentManager = this;
 	}
 
 	@FXML
@@ -106,5 +114,10 @@ public class AccountHome {
 	private void loadView(Parent view) {
 		content.getChildren().clear();
 		content.getChildren().add(view);
+	}
+
+	@Override
+	public void setContentView(Parent view) {
+		loadView(view);
 	}
 }
