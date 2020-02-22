@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import com.jdc.accounting.model.BalanceException;
 import com.jdc.accounting.model.entity.Employee;
+import com.jdc.accounting.model.entity.Employee.Role;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class EmployeeEdit {
+	
+    @FXML
+	private Label title;
 
     @FXML
     private Label message;
@@ -27,7 +31,7 @@ public class EmployeeEdit {
     private TextField code;
 
     @FXML
-    private ComboBox<?> role;
+    private ComboBox<Role> role;
 
     @FXML
     private TextField phone;
@@ -38,7 +42,13 @@ public class EmployeeEdit {
     @FXML
     private TextArea address;
     
+    private Employee emp;
     private Consumer<Employee> saveListener;
+       
+    @FXML
+    private void initialize() {
+    	role.getItems().addAll(Role.values());
+    }
     
     @FXML
     private void close() {
@@ -58,16 +68,27 @@ public class EmployeeEdit {
     		
 		} catch (BalanceException e) {
 			e.printStackTrace();
+			message.setText(e.getMessage());
 		}
 
     }
 
 	private Employee getViewData() {
-		// TODO Auto-generated method stub
-		return null;
+		emp.setAddress(address.getText());
+		emp.setCode(code.getText());
+		emp.setEmail(email.getText());
+		emp.setName(name.getText());
+
+		if(code.isEditable()) {
+			emp.setPassword(code.getText());
+		}
+		
+		emp.setPhone(phone.getText());
+		emp.setRole(role.getValue());
+		return emp;
 	}
 
-	public static void show(Consumer<Employee> listener) {
+	public static void show(Employee emp, Consumer<Employee> listener) {
 
 		try {
 			Stage stage = new Stage();
@@ -77,13 +98,34 @@ public class EmployeeEdit {
 			stage.setScene(new Scene(loader.load()));
 			
 			EmployeeEdit controller = loader.getController();
-			controller.saveListener = listener;
+			controller.init(emp, listener);
 			
 			stage.show();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void init(Employee emp, Consumer<Employee> listener) {
+		
+		this.emp = emp;
+		this.saveListener = listener;
+		
+		if(null == emp) {
+			title.setText("Add New Employee");
+			this.emp = new Employee();
+		} else {
+			title.setText("Edit Employee");
+			name.setText(emp.getName());
+			code.setText(emp.getCode());
+			code.setEditable(false);
+			role.setValue(emp.getRole());
+			phone.setText(emp.getPhone());
+			email.setText(emp.getEmail());
+			address.setText(emp.getAddress());
+		}
+		
 	}
 
 

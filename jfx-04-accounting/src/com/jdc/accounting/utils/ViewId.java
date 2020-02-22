@@ -1,4 +1,4 @@
-package com.jdc.accounting.views.utils;
+package com.jdc.accounting.utils;
 
 public enum ViewId {
 	Home("EmployeeHome", false), 

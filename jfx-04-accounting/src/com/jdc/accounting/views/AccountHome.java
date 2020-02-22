@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import com.jdc.accounting.context.ApplicationContext;
-import com.jdc.accounting.views.utils.ViewId;
+import com.jdc.accounting.utils.ViewId;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

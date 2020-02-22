@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="content-view" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdc.accounting.views.EmployeeManagement">
@@ -29,12 +30,36 @@
       </HBox>
       <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn maxWidth="140.0" minWidth="140.0" prefWidth="140.0" text="Role" />
-          <TableColumn maxWidth="134.0" minWidth="134.0" prefWidth="134.0" text="Code" />
-          <TableColumn maxWidth="220.0" minWidth="220.0" prefWidth="220.0" text="Name" />
-            <TableColumn maxWidth="200.0" minWidth="140.0" prefWidth="160.0" text="Phone" />
-            <TableColumn maxWidth="300.0" minWidth="160.0" prefWidth="201.0" text="Email" />
-            <TableColumn maxWidth="500.0" minWidth="120.0" prefWidth="267.0" text="Address" />
+            <TableColumn maxWidth="140.0" minWidth="140.0" prefWidth="140.0" text="Role" >
+            	<cellValueFactory>
+            		<PropertyValueFactory property="role" />
+            	</cellValueFactory>
+            </TableColumn>
+            <TableColumn maxWidth="134.0" minWidth="134.0" prefWidth="134.0" text="Code"  >
+            	<cellValueFactory>
+            		<PropertyValueFactory property="code" />
+            	</cellValueFactory>
+            </TableColumn>
+            <TableColumn maxWidth="220.0" minWidth="220.0" prefWidth="220.0" text="Name"  >
+            	<cellValueFactory>
+            		<PropertyValueFactory property="name" />
+            	</cellValueFactory>
+            </TableColumn>
+            <TableColumn maxWidth="200.0" minWidth="140.0" prefWidth="160.0" text="Phone"  >
+            	<cellValueFactory>
+            		<PropertyValueFactory property="phone" />
+            	</cellValueFactory>
+            </TableColumn>
+            <TableColumn maxWidth="300.0" minWidth="160.0" prefWidth="201.0" text="Email"  >
+            	<cellValueFactory>
+            		<PropertyValueFactory property="email" />
+            	</cellValueFactory>
+            </TableColumn>
+            <TableColumn maxWidth="500.0" minWidth="120.0" prefWidth="267.0" text="Address"  >
+            	<cellValueFactory>
+            		<PropertyValueFactory property="address" />
+            	</cellValueFactory>
+            </TableColumn>
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

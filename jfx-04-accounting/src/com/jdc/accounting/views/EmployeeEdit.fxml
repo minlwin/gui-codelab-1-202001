@@ -17,7 +17,7 @@
    <children>
       <HBox styleClass="header">
          <children>
-            <Label text="Edit Employee" />
+            <Label fx:id="title" text="Edit Employee" />
          </children>
       </HBox>
       <GridPane hgap="20.0" vgap="5.0">
@@ -38,7 +38,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="message" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="message" text="" GridPane.columnIndex="1" />
             <Label text="Employee Name" GridPane.rowIndex="1" />
             <Label text="Employee Code" GridPane.rowIndex="2" />
             <Label text="Role" GridPane.rowIndex="3" />
