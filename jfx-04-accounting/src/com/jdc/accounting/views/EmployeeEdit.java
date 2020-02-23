@@ -2,6 +2,7 @@ package com.jdc.accounting.views;
 
 import java.util.function.Consumer;
 
+import com.jdc.accounting.context.ApplicationContext;
 import com.jdc.accounting.model.BalanceException;
 import com.jdc.accounting.model.entity.Employee;
 import com.jdc.accounting.model.entity.Employee.Role;
@@ -48,6 +49,7 @@ public class EmployeeEdit {
     @FXML
     private void initialize() {
     	role.getItems().addAll(Role.values());
+    	role.setDisable(!ApplicationContext.isAdamin());
     }
     
     @FXML
@@ -67,7 +69,6 @@ public class EmployeeEdit {
     		close();
     		
 		} catch (BalanceException e) {
-			e.printStackTrace();
 			message.setText(e.getMessage());
 		}
 

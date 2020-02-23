@@ -3,6 +3,7 @@ package com.jdc.accounting.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +11,13 @@ import com.jdc.accounting.model.entity.Employee;
 import com.jdc.accounting.model.entity.Employee.Role;
 import com.jdc.accounting.utils.ConnectionManager;
 import com.jdc.accounting.utils.StringUtils;
+import com.jdc.accounting.utils.ValidationUtils;
 
-public class EmployeeModel {
+public class EmployeeModel implements UserDetailsService{
 
 	public void save(Employee emp) {
+		
+		validate(emp);
 		
 		if(isOldData(emp.getCode())) {
 			update(emp);
@@ -23,6 +27,14 @@ public class EmployeeModel {
 
 	}
 	
+	private void validate(Employee emp) {
+		ValidationUtils.notEmptyStringInput(emp.getCode(), "Employee Code");
+		ValidationUtils.notEmptyStringInput(emp.getName(), "Employee Name");
+		ValidationUtils.notNullSelect(emp.getRole(), "Role");
+		ValidationUtils.notEmptyStringInput(emp.getPassword(), "Password");
+		ValidationUtils.notEmptyStringInput(emp.getPhone(), "Phone Number");
+	}
+
 	private void insert(Employee emp) {
 		String sql  = "insert into employee values (?, ?, ?, ?, ?, ?, ?)";
 		
@@ -77,13 +89,35 @@ public class EmployeeModel {
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
-				return true;
+				return rs.getLong(1) > 0;
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 		return false;
+	}
+	
+	public Employee findByCode(String code) {
+		
+		String sql = "select * from employee where emp_code = ?";
+		
+		try(Connection conn = ConnectionManager.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setString(1, code);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				return getData(rs);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+		return null;
 	}
 
 	public List<Employee> search(Role role, String code, String name) {
@@ -118,15 +152,7 @@ public class EmployeeModel {
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
-				Employee emp  = new Employee();
-				emp.setCode(rs.getString("emp_code"));
-				emp.setName(rs.getString("name"));
-				emp.setPhone(rs.getString("phone"));
-				emp.setEmail(rs.getString("email"));
-				emp.setPassword(rs.getString("password"));
-				emp.setAddress(rs.getString("address"));
-				emp.setRole(Role.valueOf(rs.getString("role")));
-				list.add(emp);
+				list.add(getData(rs));
 			}
 			
 		} catch (Exception e) {
@@ -135,5 +161,48 @@ public class EmployeeModel {
 		
 		return list;
 	}
+
+	private Employee getData(ResultSet rs) throws SQLException {
+		Employee emp  = new Employee();
+		emp.setCode(rs.getString("emp_code"));
+		emp.setName(rs.getString("name"));
+		emp.setPhone(rs.getString("phone"));
+		emp.setEmail(rs.getString("email"));
+		emp.setPassword(rs.getString("password"));
+		emp.setAddress(rs.getString("address"));
+		emp.setRole(Role.valueOf(rs.getString("role")));
+		return emp;
+	}
+
+	public Employee changePassword(String code, String oldPass, String newPass) {
+		
+		ValidationUtils.notEmptyString(code, "Please login again.");
+		ValidationUtils.notEmptyStringInput(oldPass, "Old Password");
+		ValidationUtils.notEmptyStringInput(newPass, "New Password");
+		
+		Employee emp = findByCode(code);
+		if(!emp.getPassword().equals(oldPass)) {
+			throw new BalanceException("Please check your old password.");
+		}
+		
+		String update = "update employee set password = ? where emp_code = ?";
+		
+		try(Connection conn = ConnectionManager.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(update)) {
+			
+			stmt.setString(1, newPass);
+			stmt.setString(2, code);
+			
+			stmt.executeUpdate();
+			
+			return findByCode(code);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		return null;
+	}
+
 
 }

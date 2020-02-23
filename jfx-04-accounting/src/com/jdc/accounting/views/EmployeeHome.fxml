@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="content-view" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="content-view" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdc.accounting.views.EmployeeHome">
    <children>
       <VBox prefWidth="100.0" styleClass="small-column">
          <children>
@@ -35,31 +35,31 @@
                               <VBox>
                                  <children>
                                     <Label text="Code" />
-                                    <Label text="EMP-001" />
+                                    <Label fx:id="code" text="EMP-001" />
                                  </children>
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0">
                                  <children>
                                     <Label text="Name" />
-                                    <Label text="U Maung  Maung" />
+                                    <Label fx:id="name" text="U Maung  Maung" />
                                  </children>
                               </VBox>
                               <VBox layoutX="10.0" layoutY="142.0">
                                  <children>
                                     <Label text="Role" />
-                                    <Label text="Employee" />
+                                    <Label fx:id="role" text="Employee" />
                                  </children>
                               </VBox>
                               <VBox layoutX="10.0" layoutY="10.0">
                                  <children>
                                     <Label text="Phone" />
-                                    <Label text="0977898776688" />
+                                    <Label fx:id="phone" text="0977898776688" />
                                  </children>
                               </VBox>
                               <VBox layoutX="10.0" layoutY="54.0">
                                  <children>
                                     <Label text="Email" />
-                                    <Label text="maung@gmail.com" />
+                                    <Label fx:id="email" text="maung@gmail.com" />
                                  </children>
                               </VBox>
                            </children>
@@ -68,8 +68,8 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="EDIT PROFILE" HBox.hgrow="ALWAYS" />
-                        <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="CHANGE PASSWORD" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editProfile" text="EDIT PROFILE" HBox.hgrow="ALWAYS" />
+                        <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#changePass" text="CHANGE PASSWORD" HBox.hgrow="ALWAYS" />
                      </children>
                      <styleClass>
                         <String fx:value="sp10" />
