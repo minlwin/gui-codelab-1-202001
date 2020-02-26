@@ -1,7 +1,5 @@
 package com.jdc.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 

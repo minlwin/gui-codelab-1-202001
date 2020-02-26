@@ -3,6 +3,7 @@ package com.jdc.jpa.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,6 +12,9 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REMOVE;
 
 @Entity
 public class Sale implements Serializable {
@@ -20,7 +24,7 @@ public class Sale implements Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	private long id;
-	@ManyToOne
+	@ManyToOne(cascade = { PERSIST, MERGE })
 	private Customer customer;
 	private LocalDate saleDate;
 	private LocalTime saleTime;
@@ -29,8 +33,24 @@ public class Sale implements Serializable {
 	private int deliveryFees;
 	private int total;
 
-	@OneToMany(mappedBy = "sale")
+	@OneToMany(mappedBy = "sale", cascade = { PERSIST, MERGE, REMOVE })
 	private List<SaleDetails> orders;
+	
+	public Sale() {
+		orders = new ArrayList<>();
+	}
+	
+	public void addDetaills(SaleDetails sd) {
+		sd.setSale(this);
+		orders.add(sd);
+		calculate();
+	}
+	
+	private void calculate() {
+		subTotal = orders.stream().mapToInt(a  -> a.getPrice() * a.getQuantity()).sum();
+		tax = subTotal / 100  * 5;
+		total = subTotal + tax + deliveryFees;
+	}
 
 	public List<SaleDetails> getOrders() {
 		return orders;
