@@ -1,5 +1,8 @@
 package com.jdc.accounting.views;
 
+import com.jdc.accounting.model.entity.Balance;
+import com.jdc.accounting.model.entity.BalanceType;
+
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
@@ -26,14 +29,16 @@ public class BalanceManagement {
     private DatePicker dateTo;
 
     @FXML
-    private TableView<?> table;
+    private TableView<Balance> table;
     
-    private boolean income;
+    private BalanceType type;
 
     @FXML
     private void addNew() {
     	try {
-        	Parent view = BalanceDetails.getView(income);
+    		Balance balance = new Balance();
+    		balance.setType(type);
+        	Parent view = BalanceDetails.getView(balance);
         	AccountHome.getContentManager().setContentView(view);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,9 +60,9 @@ public class BalanceManagement {
 
     }
 
-	public void init(boolean income) {
-		this.income = income;
-		title.setText(income ? "Incomes Management" : "Expenses Management");
+	public void init(BalanceType type) {
+		this.type = type;
+		title.setText(type == BalanceType.Incomes ? "Incomes Management" : "Expenses Management");
 	}
 
 }

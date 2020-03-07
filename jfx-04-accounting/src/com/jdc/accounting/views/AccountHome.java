@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import com.jdc.accounting.context.ApplicationContext;
+import com.jdc.accounting.model.entity.BalanceType;
 import com.jdc.accounting.utils.ViewId;
 
 import javafx.fxml.FXML;
@@ -102,7 +103,7 @@ public class AccountHome implements ContentManager{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(viewId.getView()));
 		Parent view = loader.load();
 		BalanceManagement controller = loader.getController();
-		controller.init(viewId == ViewId.Incomes);
+		controller.init(viewId == ViewId.Incomes? BalanceType.Incomes : BalanceType.Expenses);
 		loadView(view);
 	}
 

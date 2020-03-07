@@ -1,12 +1,14 @@
 package com.jdc.accounting.model.entity;
 
-public class BalanceDetails {
+public class BalanceDetail {
 
 	private int id;
 	private String title;
 	private String remark;
 	private int amount;
 	private int balanceId;
+	
+	private int no;
 
 	public int getId() {
 		return id;
@@ -46,6 +48,14 @@ public class BalanceDetails {
 
 	public void setBalanceId(int balanceId) {
 		this.balanceId = balanceId;
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 }
