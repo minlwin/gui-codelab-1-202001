@@ -121,4 +121,19 @@ public class AccountHome implements ContentManager{
 	public void setContentView(Parent view) {
 		loadView(view);
 	}
+
+	@Override
+	public void loadBalance(BalanceType type) {
+		try {
+			ViewId viewId = type == BalanceType.Incomes ? ViewId.Incomes : ViewId.Expenses;
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(viewId.getView()));
+			Parent view = loader.load();
+			BalanceManagement controller = loader.getController();
+			controller.init(type);
+			loadView(view);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

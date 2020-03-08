@@ -11,6 +11,10 @@ public class Balance {
 	private BalanceType type;
 	private Category category;
 	private String remark;
+	
+	public String getEmployeeName() {
+		return employee.getName();
+	}
 
 	public int getId() {
 		return id;

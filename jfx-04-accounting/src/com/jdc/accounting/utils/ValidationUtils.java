@@ -1,6 +1,9 @@
 package com.jdc.accounting.utils;
 
 import com.jdc.accounting.model.BalanceException;
+import com.jdc.accounting.model.entity.BalanceDetail;
+
+import javafx.collections.ObservableList;
 
 public class ValidationUtils {
 
@@ -25,6 +28,19 @@ public class ValidationUtils {
 	public static void notEmptyString(String str, String message) {
 		if(StringUtils.isEmpty(str)) {
 			throw new BalanceException(message);
+		}
+	}
+
+	public static void notEmptyList(ObservableList<BalanceDetail> items, String string) {
+
+		if(null == items || items.isEmpty()) {
+			throw new BalanceException(String.format("Please add %s!", string));
+		}
+	}
+
+	public static<T> void notNull(T d, String string) {
+		if(null == d) {
+			throw new BalanceException(String.format("%s must not be null!", string));
 		}
 	}
 }
