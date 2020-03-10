@@ -182,3 +182,7 @@
 	-fx-pref-width: 600px;
 }
 
+
+.right {
+	-fx-alignment: center-right;
+}

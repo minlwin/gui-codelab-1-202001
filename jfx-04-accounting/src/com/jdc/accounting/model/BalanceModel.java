@@ -277,5 +277,85 @@ public class BalanceModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Balance> search(LocalDate from, LocalDate to) {
+		
+		if(null == from) {
+			throw new BalanceException("Please enter date from.");
+		}
+		
+		List<Balance> result = new ArrayList<>();
+		int lastBalance = getBalanceBefore(from);
+		String sql = "select b.id, b.category_id, c.name, b.business_date, b.total, b.remark, b.type, b.employee_emp_code, e.name, e.role "
+				+ "from balance b "
+				+ "join category c on b.category_id = c.id "
+				+ "join employee e on e.emp_code = b.employee_emp_code "
+				+ "where b.business_date >= ?";
+		
+		StringBuilder sb = new StringBuilder(sql);
+		
+		if(null != to) {
+			sb.append(" and business_date <= ?");
+		}
+		
+
+		try (Connection conn = ConnectionManager.getConnection(); 
+				PreparedStatement stmt = conn.prepareStatement(sb.toString())) {
+			stmt.setDate(1, Date.valueOf(from));
+			
+			if(null != to) {
+				stmt.setDate(2, Date.valueOf(from));
+			}
+			
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Balance data = getData(rs);
+				
+				if(data.getType() == BalanceType.Incomes) {
+					lastBalance += data.getTotal();
+				} else {
+					lastBalance -= data.getTotal();
+				}
+				
+				data.setBalance(lastBalance);
+				
+				result.add(data);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	private int getBalanceBefore(LocalDate from) {
+		int incomeBefore = getBalanceBefore(from, BalanceType.Incomes);
+		int expenseBefore = getBalanceBefore(from, BalanceType.Expenses);
+		
+		return incomeBefore - expenseBefore;
+	}
+
+	private int getBalanceBefore(LocalDate from, BalanceType type) {
+		
+		String sql = "select sum(total) from balance where type = ? and business_date < ?";
+
+		try (Connection conn = ConnectionManager.getConnection(); 
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, type.ordinal());
+			stmt.setDate(2, Date.valueOf(from));
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
 
 }

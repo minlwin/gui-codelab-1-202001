@@ -12,6 +12,16 @@ public class Balance {
 	private Category category;
 	private String remark;
 	
+	private int balance;
+	
+	public int getIncome() {
+		return type == BalanceType.Incomes ? total : 0;
+	}
+	
+	public int getExpense() {
+		return type == BalanceType.Expenses ? total : 0;
+	}
+	
 	public String getEmployeeName() {
 		return employee.getName();
 	}
@@ -70,6 +80,14 @@ public class Balance {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
 	}
 
 }

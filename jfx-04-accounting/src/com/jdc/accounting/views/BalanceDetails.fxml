@@ -56,7 +56,7 @@
             <TextField fx:id="empName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="empRole" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <DatePicker fx:id="businessDate" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" />
-            <TextField fx:id="total" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="total" editable="false" styleClass="right" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <Label text="Remark" GridPane.rowIndex="3" />
             <TextArea fx:id="remark" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
          </children>
@@ -72,7 +72,7 @@
       <HBox styleClass="sp10">
          <children>
             <TextField fx:id="inputTitle" promptText="Title" styleClass="wid-240" />
-            <TextField fx:id="inputAmount" promptText="Amount" />
+            <TextField fx:id="inputAmount" promptText="Amount" styleClass="right" />
             <TextField fx:id="inputRemark" promptText="Remark" HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#add" text="Add" />
          </children>
@@ -89,7 +89,7 @@
           		<PropertyValueFactory property="title" />
           	</cellValueFactory>
           </TableColumn>
-          <TableColumn fx:id="amountColumn" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" text="Amount">
+          <TableColumn fx:id="amountColumn" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" styleClass="right" text="Amount">
           	<cellValueFactory>
           		<PropertyValueFactory property="amount" />
           	</cellValueFactory>
