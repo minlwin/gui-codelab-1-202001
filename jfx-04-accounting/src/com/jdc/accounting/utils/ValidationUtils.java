@@ -1,9 +1,9 @@
 package com.jdc.accounting.utils;
 
+import java.util.List;
+
 import com.jdc.accounting.model.BalanceException;
 import com.jdc.accounting.model.entity.BalanceDetail;
-
-import javafx.collections.ObservableList;
 
 public class ValidationUtils {
 
@@ -31,7 +31,7 @@ public class ValidationUtils {
 		}
 	}
 
-	public static void notEmptyList(ObservableList<BalanceDetail> items, String string) {
+	public static void notEmptyList(List<BalanceDetail> items, String string) {
 
 		if(null == items || items.isEmpty()) {
 			throw new BalanceException(String.format("Please add %s!", string));

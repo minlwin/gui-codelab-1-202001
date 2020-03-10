@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -8,20 +9,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="content-view" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jdc.accounting.views.BalanceDetails">
    <children>
-      <HBox alignment="CENTER_LEFT" styleClass="header">
+      <HBox alignment="CENTER_LEFT">
          <children>
             <Label fx:id="title" maxWidth="1.7976931348623157E308" text="Balance Summary" HBox.hgrow="ALWAYS" />
+            <Button fx:id="delButton" mnemonicParsing="false" onAction="#delete" text="DELETE" />
             <Button mnemonicParsing="false" onAction="#save" text="SAVE" />
          </children>
+         <styleClass>
+            <String fx:value="header" />
+            <String fx:value="sp10" />
+         </styleClass>
       </HBox>
       <GridPane vgap="10.0">
         <columnConstraints>
@@ -71,24 +77,24 @@
             <Button mnemonicParsing="false" onAction="#add" text="Add" />
          </children>
       </HBox>
-      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <TableView fx:id="table" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="No">
           	<cellValueFactory>
           		<PropertyValueFactory property="no" />
           	</cellValueFactory>
           </TableColumn>
-          <TableColumn maxWidth="380.0" minWidth="380.0" prefWidth="380.0" text="Title" >
+          <TableColumn maxWidth="380.0" minWidth="380.0" prefWidth="380.0" text="Title">
           	<cellValueFactory>
           		<PropertyValueFactory property="title" />
           	</cellValueFactory>
           </TableColumn>
-          <TableColumn maxWidth="180.0" minWidth="180.0" prefWidth="180.0" text="Amount" >
+          <TableColumn fx:id="amountColumn" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" text="Amount">
           	<cellValueFactory>
           		<PropertyValueFactory property="amount" />
           	</cellValueFactory>
           </TableColumn>
-          <TableColumn prefWidth="75.0" text="Remark" >
+          <TableColumn prefWidth="75.0" text="Remark">
           	<cellValueFactory>
           		<PropertyValueFactory property="remark" />
           	</cellValueFactory>

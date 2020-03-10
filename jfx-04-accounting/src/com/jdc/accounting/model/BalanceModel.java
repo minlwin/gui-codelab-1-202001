@@ -15,19 +15,82 @@ import com.jdc.accounting.model.entity.BalanceDetail;
 import com.jdc.accounting.model.entity.BalanceType;
 import com.jdc.accounting.model.entity.Category;
 import com.jdc.accounting.model.entity.Employee;
+import com.jdc.accounting.model.entity.Employee.Role;
 import com.jdc.accounting.utils.ConnectionManager;
 import com.jdc.accounting.utils.StringUtils;
 import com.jdc.accounting.utils.ValidationUtils;
 
-import javafx.collections.ObservableList;
-
 public class BalanceModel {
 
-	public void create(Balance balance, ObservableList<BalanceDetail> items) {
+	public void save(Balance balance, List<BalanceDetail> items) {
 		
 		validate(balance);
 		validate(items);
 		
+		if(balance.getId() == 0) {
+			insert(balance, items);
+		} else {
+			update(balance, items);
+		}
+
+	}
+	
+	private void update(Balance balance, List<BalanceDetail> items) {
+		
+		String bUpdate = "update balance set category_id = ?, business_date = ?, total = ?, remark = ? where id = ?";
+		String dInsert = "insert into balance_details (balance_id, title, amount, remark) values (?, ?, ?, ?)";
+		String dUpdate = "update balance_details set title = ?, amount = ?, remark = ? where id = ?";
+		String dDelete = "delete from balance_details where id = ?";
+		
+		try (Connection conn = ConnectionManager.getConnection(); 
+				PreparedStatement bUpdStmt = conn.prepareStatement(bUpdate);
+				PreparedStatement dInsStmt = conn.prepareStatement(dInsert);
+				PreparedStatement dUpdStmt = conn.prepareStatement(dUpdate);
+				PreparedStatement dDelStmt = conn.prepareStatement(dDelete);
+			) {
+			
+			bUpdStmt.setInt(1, balance.getCategory().getId());
+			bUpdStmt.setDate(2, Date.valueOf(balance.getDate()));
+			bUpdStmt.setInt(3, balance.getTotal());
+			bUpdStmt.setString(4, balance.getRemark());
+			bUpdStmt.setInt(5, balance.getId());
+			
+			bUpdStmt.executeUpdate();
+			
+			for(BalanceDetail d : items) {
+				
+				if(d.getId() == 0) {
+					dInsStmt.setInt(1, balance.getId());
+					dInsStmt.setString(2, d.getTitle());
+					dInsStmt.setInt(3, d.getAmount());
+					dInsStmt.setString(4, d.getRemark());
+					
+					dInsStmt.executeUpdate();
+					
+				} else {
+					
+					if(d.isDelete()) {
+						dDelStmt.setInt(1, d.getId());
+						dDelStmt.executeUpdate();
+					} else {
+						dUpdStmt.setString(1, d.getTitle());
+						dUpdStmt.setInt(2, d.getAmount());
+						dUpdStmt.setString(3, d.getRemark());
+						dUpdStmt.setInt(4, d.getId());
+						
+						dUpdStmt.executeUpdate();
+					}
+				}
+				
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void insert(Balance balance, List<BalanceDetail> items) {
 		String balanceInsert = "insert into balance (category_id, business_date, total, remark, type, employee_emp_code) values (?, ?, ?, ?, ?, ?)";
 		String detailsInsert = "insert into balance_details (balance_id, title, amount, remark) values (?, ?, ?, ?)";
 
@@ -56,19 +119,16 @@ public class BalanceModel {
 					detailsStatement.setInt(3, d.getAmount());
 					detailsStatement.setString(4, d.getRemark());
 					
-					detailsStatement.addBatch();
+					detailsStatement.executeUpdate();
 				}
-				
-				detailsStatement.executeBatch();
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		}		
 	}
 
-	private void validate(ObservableList<BalanceDetail> items) {
+	private void validate(List<BalanceDetail> items) {
 
 		ValidationUtils.notEmptyList(items, "Balance Detail");
 		
@@ -87,7 +147,7 @@ public class BalanceModel {
 	public List<Balance> search(BalanceType type, Category category, LocalDate from, LocalDate to, String employee) {
 		List<Balance> result = new ArrayList<>();
 		
-		String sql = "select b.id, b.category_id, c.name, b.business_date, b.total, b.remark, b.type, b.employee_emp_code, e.name "
+		String sql = "select b.id, b.category_id, c.name, b.business_date, b.total, b.remark, b.type, b.employee_emp_code, e.name, e.role "
 				+ "from balance b "
 				+ "join category c on b.category_id = c.id "
 				+ "join employee e on e.emp_code = b.employee_emp_code "
@@ -162,8 +222,60 @@ public class BalanceModel {
 		
 		e.setCode(rs.getString(8));
 		e.setName(rs.getString(9));
+		e.setRole(Role.valueOf(rs.getString(10)));
 		
 		return b;
+	}
+
+	public List<BalanceDetail> findDetails(int id) {
+		
+		List<BalanceDetail> list = new ArrayList<>();
+		
+		String sql = "select * from balance_details where balance_id = ?";
+
+		try (Connection conn = ConnectionManager.getConnection(); 
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				BalanceDetail d = getDetails(rs);
+				list.add(d);
+				d.setNo(list.size());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private BalanceDetail getDetails(ResultSet rs) throws SQLException {
+		BalanceDetail d = new BalanceDetail();
+	
+		d.setId(rs.getInt(1));
+		d.setAmount(rs.getInt(2));
+		d.setTitle(rs.getString(3));
+		d.setAmount(rs.getInt(4));
+		d.setRemark(rs.getString(5));
+		return d;
+	}
+
+	public void delete(Balance balance) {
+
+		String sql = "delete from balance where id = ?";
+
+		try (Connection conn = ConnectionManager.getConnection(); 
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			stmt.setInt(1, balance.getId());
+			stmt.executeLargeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

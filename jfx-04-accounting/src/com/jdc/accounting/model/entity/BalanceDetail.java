@@ -9,6 +9,7 @@ public class BalanceDetail {
 	private int balanceId;
 	
 	private int no;
+	private boolean delete;
 
 	public int getId() {
 		return id;
@@ -56,6 +57,14 @@ public class BalanceDetail {
 
 	public void setNo(int no) {
 		this.no = no;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	public void setDelete(boolean delete) {
+		this.delete = delete;
 	}
 
 }

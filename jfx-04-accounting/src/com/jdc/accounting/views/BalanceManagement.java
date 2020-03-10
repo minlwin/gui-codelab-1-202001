@@ -1,5 +1,6 @@
 package com.jdc.accounting.views;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.jdc.accounting.model.BalanceModel;
@@ -62,6 +63,21 @@ public class BalanceManagement {
 		dateTo.valueProperty().addListener((a, b, c) -> search());
 
 		selectedCategory.addListener((a, b, c) -> search());
+
+		table.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				try {
+					Balance balance = table.getSelectionModel().getSelectedItem();
+					if (null != balance) {
+						Parent view = BalanceDetails.getView(balance);
+						AccountHome.getContentManager().setContentView(view);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 	}
 
 	@FXML
@@ -99,6 +115,7 @@ public class BalanceManagement {
 	public void init(BalanceType type) {
 		this.type = type;
 		title.setText(type == BalanceType.Incomes ? "Incomes Management" : "Expenses Management");
+		dateFrom.setValue(LocalDate.now().withDayOfMonth(1));
 	}
 
 }

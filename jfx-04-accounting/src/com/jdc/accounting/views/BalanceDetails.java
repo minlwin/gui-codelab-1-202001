@@ -1,7 +1,8 @@
 package com.jdc.accounting.views;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.jdc.accounting.context.ApplicationContext;
 import com.jdc.accounting.model.BalanceModel;
@@ -10,6 +11,7 @@ import com.jdc.accounting.model.entity.Balance;
 import com.jdc.accounting.model.entity.BalanceDetail;
 import com.jdc.accounting.model.entity.BalanceType;
 import com.jdc.accounting.model.entity.Category;
+import com.jdc.accounting.utils.StringUtils;
 import com.jdc.accounting.utils.ValidationUtils;
 import com.jdc.commons.fx.controls.AutoCompleteUtils;
 
@@ -19,11 +21,17 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 
 public class BalanceDetails {
 
@@ -62,6 +70,12 @@ public class BalanceDetails {
 
 	@FXML
 	private TableView<BalanceDetail> table;
+	
+	@FXML
+	private TableColumn<BalanceDetail, Integer> amountColumn;
+	
+	@FXML
+	private Button delButton;
 
 	private Balance balance;
 
@@ -69,9 +83,12 @@ public class BalanceDetails {
 	private BalanceModel model;
 
 	private IntegerProperty totalProperty;
+	
+	private List<BalanceDetail> deleteList;
 
 	@FXML
 	private void initialize() {
+		this.deleteList = new ArrayList<>();
 		this.categoryModel = new CategoryModel();
 		this.model = new BalanceModel();
 		this.totalProperty = new SimpleIntegerProperty();
@@ -89,13 +106,47 @@ public class BalanceDetails {
 			}
 		});
 
-		table.getItems().addListener((Change<? extends BalanceDetail> c) -> {
-			int totalValue = table.getItems().stream().mapToInt(details -> details.getAmount()).sum();
+		table.getItems().addListener((Change<? extends BalanceDetail> c) -> calculate());
+		
+		amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
 
-			this.totalProperty.set(totalValue);
-			this.balance.setTotal(totalValue);
+			@Override
+			public String toString(Integer object) {
+				if(null != object) {
+					return object.toString();
+				}
+				return null;
+			}
+
+			@Override
+			public Integer fromString(String string) {
+				if(!StringUtils.isEmpty(string)) {
+					return Integer.parseInt(string);
+				}
+				return null;
+			}
+		}));
+		
+		amountColumn.setOnEditCommit(event -> {
+			event.getRowValue().setAmount(event.getNewValue());
+			calculate();
 		});
-
+		
+		MenuItem delete = new MenuItem("Delete");
+		delete.setOnAction(e  -> {
+			BalanceDetail data = table.getSelectionModel().getSelectedItem();
+			table.getItems().remove(data);
+			
+			if(data.getId() > 0) {
+				data.setDelete(true);
+				deleteList.add(data);
+			}
+			
+			calculate();
+		});
+		
+		table.setContextMenu(new ContextMenu(delete));
+		
 	}
 
 	private void init(final Balance balance) {
@@ -106,6 +157,7 @@ public class BalanceDetails {
 		if (balance.getId() == 0) {
 			balance.setEmployee(ApplicationContext.getLoginUser());
 			balance.setDate(LocalDate.now());
+			delButton.setVisible(false);
 		}
 
 		empCode.setText(balance.getEmployee().getCode());
@@ -116,8 +168,12 @@ public class BalanceDetails {
 		if (balance.getCategory() != null) {
 			category.setText(balance.getCategory().getName());
 		}
+		
+		if(balance.getId() > 0) {
+			List<BalanceDetail> details = model.findDetails(balance.getId());
+			table.getItems().addAll(details);
+		}
 
-		inputAmount.setText(String.valueOf(balance.getTotal()));
 		remark.setText(balance.getRemark());
 
 		AutoCompleteUtils.attach(category, name -> categoryModel.search(this.balance.getType(), name),
@@ -146,14 +202,7 @@ public class BalanceDetails {
 			e.printStackTrace();
 		}
 	}
-
-	private void validate(BalanceDetail data) {
-
-		ValidationUtils.notEmptyString(data.getTitle(), "Title of Balance Details");
-
-		ValidationUtils.notZero(data.getAmount(), "Amount");
-	}
-
+	
 	@FXML
 	private void save() {
 
@@ -165,7 +214,10 @@ public class BalanceDetails {
 			}
 
 			// save balance
-			model.create(balance, table.getItems());
+			List<BalanceDetail> list = new ArrayList<>();
+			list.addAll(deleteList);
+			list.addAll(table.getItems());
+			model.save(balance, list);
 
 			AccountHome.getContentManager().loadBalance(balance.getType());
 
@@ -175,14 +227,46 @@ public class BalanceDetails {
 
 	}
 
-	public static Parent getView(Balance balnce) throws IOException {
+	@FXML
+	private void delete() {
+		
+		try {
+			
+			model.delete(balance);
+			
+			AccountHome.getContentManager().loadBalance(balance.getType());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-		FXMLLoader loader = new FXMLLoader(BalanceDetails.class.getResource("BalanceDetails.fxml"));
-		Parent view = loader.load();
-		BalanceDetails controller = loader.getController();
-		controller.init(balnce);
+	private void validate(BalanceDetail data) {
 
-		return view;
+		ValidationUtils.notEmptyString(data.getTitle(), "Title of Balance Details");
+
+		ValidationUtils.notZero(data.getAmount(), "Amount");
+	}
+	
+	private void calculate() {
+		int totalValue = table.getItems().stream().filter(a -> !a.isDelete()).mapToInt(details -> details.getAmount()).sum();
+
+		this.totalProperty.set(totalValue);
+		this.balance.setTotal(totalValue);
+	}
+
+	public static Parent getView(Balance balnce) {
+
+		try {
+			FXMLLoader loader = new FXMLLoader(BalanceDetails.class.getResource("BalanceDetails.fxml"));
+			Parent view = loader.load();
+			BalanceDetails controller = loader.getController();
+			controller.init(balnce);
+
+			return view;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
