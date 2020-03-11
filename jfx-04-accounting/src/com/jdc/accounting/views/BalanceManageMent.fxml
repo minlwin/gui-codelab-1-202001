@@ -43,7 +43,7 @@
             		<PropertyValueFactory property="category" />
             	</cellValueFactory>
             </TableColumn>
-            <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Amount">
+            <TableColumn maxWidth="200.0" minWidth="200.0" prefWidth="200.0" styleClass="right" text="Amount">
             	<cellValueFactory>
             		<PropertyValueFactory property="total" />
             	</cellValueFactory>
