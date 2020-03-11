@@ -11,18 +11,26 @@ import java.util.List;
 import com.jdc.accounting.model.entity.BalanceType;
 import com.jdc.accounting.model.entity.Category;
 import com.jdc.accounting.utils.ConnectionManager;
+import com.jdc.accounting.utils.StringUtils;
 
 public class CategoryModel {
 
 	public List<Category> search(BalanceType type, String name) {
 		
 		List<Category> result = new ArrayList<>();
-		String sql = "select * from category where type = ? and LOWER(name) like ?";
+		StringBuilder sb = new StringBuilder("select * from category where type = ?");
+		
+		if(!StringUtils.isEmpty(name)) {
+			sb.append(" and LOWER(name) like ?");
+		}
 		
 		try (Connection conn = ConnectionManager.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
+				PreparedStatement stmt = conn.prepareStatement(sb.toString())) {
 			stmt.setInt(1, type.ordinal());
-			stmt.setString(2, name.toLowerCase().concat("%"));
+			
+			if(!StringUtils.isEmpty(name)) {
+				stmt.setString(2, name.toLowerCase().concat("%"));
+			}
 			
 			ResultSet rs = stmt.executeQuery();
 			

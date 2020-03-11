@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
@@ -85,7 +85,7 @@
                         <Label text="Summary" />
                      </children>
                   </HBox>
-                  <PieChart />
+                  <PieChart fx:id="pieChart" />
                </children>
             </VBox>
          </children>
@@ -99,14 +99,14 @@
                         <Label text="Incomes" />
                      </children>
                   </HBox>
-                  <LineChart>
+                  <BarChart fx:id="incomeChart">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis side="LEFT" />
                     </yAxis>
-                  </LineChart>
+                  </BarChart>
                </children>
             </VBox>
             <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" styleClass="area" VBox.vgrow="ALWAYS">
@@ -116,14 +116,14 @@
                         <Label text="Expenses" />
                      </children>
                   </HBox>
-                  <LineChart>
+                  <BarChart fx:id="expenseChart">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis side="LEFT" />
                     </yAxis>
-                  </LineChart>
+                  </BarChart>
                </children>
             </VBox>
          </children>

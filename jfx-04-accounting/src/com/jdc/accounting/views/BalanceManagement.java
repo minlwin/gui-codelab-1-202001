@@ -3,11 +3,14 @@ package com.jdc.accounting.views;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.jdc.accounting.context.ApplicationContext;
 import com.jdc.accounting.model.BalanceModel;
 import com.jdc.accounting.model.CategoryModel;
 import com.jdc.accounting.model.entity.Balance;
 import com.jdc.accounting.model.entity.BalanceType;
 import com.jdc.accounting.model.entity.Category;
+import com.jdc.accounting.model.entity.Employee;
+import com.jdc.accounting.model.entity.Employee.Role;
 import com.jdc.commons.fx.controls.AutoCompleteUtils;
 
 import javafx.beans.property.ObjectProperty;
@@ -53,7 +56,14 @@ public class BalanceManagement {
 		this.categoryModel = new CategoryModel();
 		this.balanceModel = new BalanceModel();
 		this.selectedCategory = new SimpleObjectProperty<Category>();
-
+		
+		Employee loginUser = ApplicationContext.getLoginUser();
+		
+		if(loginUser.getRole() != Role.Admin) {
+			schEmployee.setText(loginUser.getCode());
+			schEmployee.setEditable(false);
+		}
+		
 		AutoCompleteUtils.attach(schCategory, name -> categoryModel.search(type, name), this.selectedCategory::set);
 
 		schCategory.textProperty().addListener((a, b, c) -> selectedCategory.set(null));
