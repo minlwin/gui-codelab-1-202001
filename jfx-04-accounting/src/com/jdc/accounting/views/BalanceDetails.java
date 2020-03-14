@@ -141,8 +141,6 @@ public class BalanceDetails {
 				data.setDelete(true);
 				deleteList.add(data);
 			}
-			
-			calculate();
 		});
 		
 		table.setContextMenu(new ContextMenu(delete));

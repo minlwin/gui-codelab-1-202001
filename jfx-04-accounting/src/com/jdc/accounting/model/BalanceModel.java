@@ -39,7 +39,7 @@ public class BalanceModel {
 		
 		String bUpdate = "update balance set category_id = ?, business_date = ?, total = ?, remark = ? where id = ?";
 		String dInsert = "insert into balance_details (balance_id, title, amount, remark) values (?, ?, ?, ?)";
-		String dUpdate = "update balance_details set title = ?, amount = ?, remark = ? where id = ?";
+		String dUpdate = "update balance_details set amount = ? where id = ?";
 		String dDelete = "delete from balance_details where id = ?";
 		
 		try (Connection conn = ConnectionManager.getConnection(); 
@@ -73,10 +73,8 @@ public class BalanceModel {
 						dDelStmt.setInt(1, d.getId());
 						dDelStmt.executeUpdate();
 					} else {
-						dUpdStmt.setString(1, d.getTitle());
-						dUpdStmt.setInt(2, d.getAmount());
-						dUpdStmt.setString(3, d.getRemark());
-						dUpdStmt.setInt(4, d.getId());
+						dUpdStmt.setInt(1, d.getAmount());
+						dUpdStmt.setInt(2, d.getId());
 						
 						dUpdStmt.executeUpdate();
 					}
@@ -298,6 +296,7 @@ public class BalanceModel {
 			sb.append(" and business_date <= ?");
 		}
 		
+		sb.append(" order by business_date");
 
 		try (Connection conn = ConnectionManager.getConnection(); 
 				PreparedStatement stmt = conn.prepareStatement(sb.toString())) {
